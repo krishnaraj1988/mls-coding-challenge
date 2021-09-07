@@ -1,3 +1,5 @@
+import { fromJS } from "immutable";
+
 const uniqueId = {
   currentId: 0,
   get() {
@@ -39,16 +41,17 @@ export const initialState = {
 };
 
 export default (state = initialState, action) => {
+  const newState = fromJS(state).toJS();
   switch (action.type) {
     case 'ADD':
-      state.todos.push({
+      newState.todos.push({
         id: uniqueId.get(),
         title: action.title,
         completed: false
       });
       break;
     case 'TOGGLE':
-      for (let todo of state.todos) {
+      for (let todo of newState.todos) {
         if (todo.id === action.id) {
           todo.completed = !todo.completed;
           break;
@@ -56,7 +59,8 @@ export default (state = initialState, action) => {
       }
       break;
     case 'SHOW':
-      state.itemGroup = action.option;
+      newState.itemGroup = action.option;
       break;
   }
+  return newState;
 }
