@@ -18,3 +18,10 @@ addListener('click', '[data-element="toggleTodo"]', e => {
   const id = Number(e.target.dataset.id);
   store.dispatch(todoActions.toggle(id));
 });
+
+addListener('keypress', '[data-element="addTodoInput"]', (e) => {
+  if(e.key === 'Enter'){
+    const todoInput = e.target;
+    store.dispatch(todoActions.add(todoInput.value));
+  }
+});
