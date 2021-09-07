@@ -19,9 +19,16 @@ addListener('click', '[data-element="toggleTodo"]', e => {
   store.dispatch(todoActions.toggle(id));
 });
 
+//Handle keypress event to add items on pressing enter key
 addListener('keypress', '[data-element="addTodoInput"]', (e) => {
   if(e.key === 'Enter'){
     const todoInput = e.target;
     store.dispatch(todoActions.add(todoInput.value));
   }
+});
+
+//Handle radio button click event to show selected, not selected or all items
+addListener('click', 'input[name="show"]', (e) => {
+  const todoInput = e.target;
+  store.dispatch(todoActions.show(todoInput.value));
 });

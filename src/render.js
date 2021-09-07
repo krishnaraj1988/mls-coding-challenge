@@ -1,5 +1,7 @@
-function renderApp(input, todoList) {
-  return `<div>${input}${todoList}</div>`;
+import { ItemGroups } from './store/todos';
+
+function renderApp(input, radios, todoList) {
+  return `<div>${input}${radios}${todoList}</div>`;
 }
 
 function renderForm() {
@@ -20,10 +22,29 @@ function renderTodoItem(todo) {
   </li>`;
 }
 
+function renderRadioButtons(state){
+  return `<div>
+  <input type="radio" id="showAll" value="${ItemGroups.SHOW_ALL}" ${state.itemGroup === ItemGroups.SHOW_ALL && 'checked'} name="show" />
+  <label for="showAll">${ItemGroups.SHOW_ALL}</label>
+  <input type="radio" id="showCompleted" value="${ItemGroups.SHOW_COMPLETED}" ${state.itemGroup === ItemGroups.SHOW_COMPLETED && 'checked'} name="show" />
+  <label for="showCompleted">${ItemGroups.SHOW_COMPLETED}</label>
+  <input type="radio" id="showNotCompleted" value="${ItemGroups.SHOW_NOT_COMPLETED}" ${state.itemGroup === ItemGroups.SHOW_NOT_COMPLETED && 'checked'} name="show" />
+  <label for="showNotCompleted">${ItemGroups.SHOW_NOT_COMPLETED}</label>
+  </div>`
+}
+
 export default (element, state) => {
-  const todoItems = state.todos.map(renderTodoItem).join('');
+  //Filter items based on radio selection
+  const todoItems = state.todos.map((todo)=>{
+    if(state.itemGroup === ItemGroups.SHOW_COMPLETED && todo.completed ||
+      state.itemGroup === ItemGroups.SHOW_NOT_COMPLETED && !todo.completed ||
+      state.itemGroup === ItemGroups.SHOW_ALL){
+      return renderTodoItem(todo);
+    }
+  }).join('');
   element.innerHTML = renderApp(
     renderForm(),
+    renderRadioButtons(state),
     renderTodos(todoItems)
   );
 }

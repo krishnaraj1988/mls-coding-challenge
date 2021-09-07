@@ -6,6 +6,12 @@ const uniqueId = {
   }
 };
 
+export const ItemGroups = Object.freeze({
+  SHOW_ALL: "Show All",
+  SHOW_COMPLETED: "Show Completed",
+  SHOW_NOT_COMPLETED: "Show Not Completed"
+});
+
 export const initialState = {
   todos: [
     {
@@ -28,7 +34,8 @@ export const initialState = {
       title: 'JS-202',
       completed: false
     }
-  ]
+  ],
+  itemGroup: ItemGroups.SHOW_ALL
 };
 
 export default (state = initialState, action) => {
@@ -47,6 +54,9 @@ export default (state = initialState, action) => {
           break;
         }
       }
+      break;
+    case 'SHOW':
+      state.itemGroup = action.option;
       break;
   }
 }
