@@ -4,10 +4,25 @@ import { connect } from 'react-redux';
 import AddItem from './AddItem';
 import Filters from './Filters';
 import TodoItems from './TodoItems';
+import {createUseStyles} from 'react-jss';
+
+const useStyles = createUseStyles({
+    container: {
+      width: '400px',
+      margin: '0 auto'
+    },
+    header: {
+        padding: '10px',
+        fontWeight: 'bold',
+        fontSize: '20px'
+    }
+  });
 
 const App = (props) => {
+    const classes = useStyles();
     return (
-        <div>
+        <div className={classes.container}>
+            <header className={classes.header}>Todo App</header>
             <AddItem {...props}/>
             <Filters {...props}/>
             <TodoItems {...props}/>

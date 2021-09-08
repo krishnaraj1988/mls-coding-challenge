@@ -1,9 +1,16 @@
 import React from 'react';
 import { ItemGroups } from '../store/todos';
+import {createUseStyles} from 'react-jss';
 
+const useStyles = createUseStyles({
+    container: {
+        padding: '5px'
+    }
+  });
 const Filters = (props) => {
+    const classes = useStyles();
     return (
-        <div className='show-buttons' onChange={(e)=> props.onShow(e.target.value)}>
+        <div className={classes.container} onChange={(e)=> props.onShow(e.target.value)}>
             <input type="radio" id="showAll" value={ItemGroups.SHOW_ALL} checked  name="show"
             checked={props.itemGroup === ItemGroups.SHOW_ALL} />
             <label htmlFor="showAll">{ItemGroups.SHOW_ALL}</label>
