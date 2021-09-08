@@ -22,5 +22,9 @@ module.exports = {
   },
   devServer: {
     contentBase: './dist'
+  },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
 };
