@@ -14,7 +14,7 @@ export const ItemGroups = Object.freeze({
   SHOW_NOT_COMPLETED: "Show Not Completed"
 });
 
-export const initialState = {
+export const initialState = fromJS({
   todos: [
     {
       id: uniqueId.get(),
@@ -38,29 +38,23 @@ export const initialState = {
     }
   ],
   itemGroup: ItemGroups.SHOW_ALL
-};
+});
 
 export default (state = initialState, action) => {
-  const newState = fromJS(state).toJS();
   switch (action.type) {
     case 'ADD':
-      newState.todos.push({
+      const todos = state.get('todos').toJS();
+      return state.set('todos', fromJS([...todos, {
         id: uniqueId.get(),
         title: action.title,
         completed: false
-      });
-      break;
+      }]));
     case 'TOGGLE':
-      for (let todo of newState.todos) {
-        if (todo.id === action.id) {
-          todo.completed = !todo.completed;
-          break;
-        }
-      }
-      break;
+      const index = state.get('todos').findIndex(item => item.get('id') === action.id);
+      return  state.updateIn(['todos', index, 'completed'], value => !value);
     case 'SHOW':
-      newState.itemGroup = action.option;
-      break;
+      return state.set('itemGroup', action.option);
+    default:
+      return state;
   }
-  return newState;
 }

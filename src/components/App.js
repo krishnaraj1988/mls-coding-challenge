@@ -38,8 +38,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 const mapStateToProps = (state) =>{
     return {
-        itemGroup: state.itemGroup,
-        items: state.todos
+        itemGroup: state.get('itemGroup'),
+        items: state.get('todos').toJS()
     }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

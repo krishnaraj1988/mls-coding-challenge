@@ -38,7 +38,7 @@ const TodoItems = (props) => {
                         type="checkbox" 
                         data-id={item.id}
                         checked={item.completed}
-                        classname={classes.checkbox}
+                        className={classes.checkbox}
                     />
                     {item.title}
                 </li>
